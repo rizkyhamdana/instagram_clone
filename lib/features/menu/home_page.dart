@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:instagram_clone/data/model/posts.dart';
+import 'package:instagram_clone/data/model/stories.dart';
 import 'package:instagram_clone/util/image_path.dart';
 import 'package:instagram_clone/util/spacing.dart';
 
@@ -12,6 +14,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final List<Stories> listStories = generateListStories;
+  final List<Posts> listPosts = generateListPosts;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,8 +40,8 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 SizedBox(
-                  width: 26,
-                  height: 26,
+                  width: 28,
+                  height: 28,
                   child: MaterialButton(
                     padding: const EdgeInsets.all(2),
                     onPressed: () {},
@@ -44,15 +49,15 @@ class _HomePageState extends State<HomePage> {
                       AssetImage(
                         imagePath('ic_post'),
                       ),
-                      size: 21,
+                      size: 24,
                       color: Colors.black,
                     ),
                   ),
                 ),
                 const HorizontalSpacing(),
                 SizedBox(
-                  width: 26,
-                  height: 26,
+                  width: 28,
+                  height: 28,
                   child: MaterialButton(
                     padding: const EdgeInsets.all(2),
                     onPressed: () {},
@@ -60,15 +65,15 @@ class _HomePageState extends State<HomePage> {
                       AssetImage(
                         imagePath('ic_like'),
                       ),
-                      size: 21,
+                      size: 24,
                       color: Colors.black,
                     ),
                   ),
                 ),
                 const HorizontalSpacing(),
                 SizedBox(
-                  width: 26,
-                  height: 26,
+                  width: 28,
+                  height: 28,
                   child: MaterialButton(
                     padding: const EdgeInsets.all(2),
                     onPressed: () {},
@@ -76,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                       AssetImage(
                         imagePath('ic_messenger'),
                       ),
-                      size: 21,
+                      size: 24,
                       color: Colors.black,
                     ),
                   ),
@@ -90,16 +95,22 @@ class _HomePageState extends State<HomePage> {
         margin: EdgeInsets.zero,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                child: Row(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                decoration: const BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(color: Colors.grey, width: 0.2)),
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -110,8 +121,8 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Container(
                               padding: const EdgeInsets.all(4),
-                              width: 64,
-                              height: 64,
+                              width: 72,
+                              height: 72,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(100),
@@ -129,11 +140,12 @@ class _HomePageState extends State<HomePage> {
                             Container(
                                 padding:
                                     const EdgeInsets.only(left: 4, right: 4),
-                                width: 72,
+                                width: 80,
                                 child: const Text(
-                                  'Your Texat',
+                                  'Your story',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 12),
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.grey),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ))
@@ -141,37 +153,114 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 84,
+                        height: 92,
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.only(left: 0, right: 16),
-                          itemCount: 10,
+                          padding: const EdgeInsets.only(left: 0, right: 8),
+                          itemCount: listStories.length,
                           itemBuilder: (context, index) {
-                            return _buildListStories();
+                            return _buildListStories(listStories[index]);
                           },
                         ),
                       )
-                    ]),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                itemCount: listPosts.length,
+                itemBuilder: (context, index) {
+                  return _buildListPosts(listPosts[index]);
+                },
+              ),
+            ],
+          ),
         ),
       ),
       backgroundColor: Colors.white,
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Colors.white,
+        ),
+        child: Container(
+          decoration: const BoxDecoration(
+            border: Border(top: BorderSide(color: Colors.grey, width: 0.2)),
+          ),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            iconSize: 24,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: [
+              BottomNavigationBarItem(
+                icon: ImageIcon(
+                  AssetImage(
+                    imagePath('ic_home'),
+                  ),
+                  color: Colors.black,
+                ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: ImageIcon(
+                  AssetImage(
+                    imagePath('ic_search'),
+                  ),
+                  color: Colors.black,
+                ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: ImageIcon(
+                  AssetImage(
+                    imagePath('ic_reels'),
+                  ),
+                  color: Colors.black,
+                ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: ImageIcon(
+                  AssetImage(
+                    imagePath('ic_shop'),
+                  ),
+                  color: Colors.black,
+                ),
+                label: '',
+              ),
+              BottomNavigationBarItem(
+                icon: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage(
+                      imagePathJpeg('ic_my_profile'),
+                    ),
+                  ),
+                ),
+                label: '',
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  Widget _buildListStories() {
+  Widget _buildListStories(Stories story) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
           padding: const EdgeInsets.all(2),
           margin: const EdgeInsets.only(left: 4),
-          height: 64,
-          width: 64,
+          height: 72,
+          width: 72,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
             gradient: LinearGradient(
@@ -185,29 +274,219 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Container(
             padding: const EdgeInsets.all(4),
-            width: 64,
+            width: 72,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(100),
             ),
             child: CircleAvatar(
               backgroundImage: AssetImage(
-                imagePathJpeg('ic_my_profile'),
+                imagePathJpg(story.avatarPath),
               ),
             ),
           ),
         ),
         Container(
-            padding: const EdgeInsets.only(left: 4),
-            width: 72,
-            child: const Text(
-              'Your Textaa',
-              style: TextStyle(fontSize: 12),
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ))
+          padding: const EdgeInsets.only(left: 4),
+          width: 80,
+          child: Text(
+            story.name,
+            style: const TextStyle(fontSize: 12),
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
       ],
+    );
+  }
+
+  Widget _buildListPosts(Posts post) {
+    return Container(
+      margin: EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 30,
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage(
+                          imagePathJpg(post.avatarPath),
+                        ),
+                      ),
+                    ),
+                    const HorizontalSpacing(
+                      width: 8,
+                    ),
+                    Text(
+                      post.name,
+                      style: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 24,
+                  height: 20,
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.more_horiz,
+                      size: 24,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Image.asset(
+            imagePath(post.imagePath),
+            width: MediaQuery.of(context).size.width,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 28,
+                      height: 28,
+                      child: MaterialButton(
+                        padding: const EdgeInsets.all(2),
+                        onPressed: () {},
+                        child: ImageIcon(
+                          AssetImage(
+                            imagePath('ic_like'),
+                          ),
+                          size: 24,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    const HorizontalSpacing(),
+                    SizedBox(
+                      width: 28,
+                      height: 28,
+                      child: MaterialButton(
+                        padding: const EdgeInsets.all(2),
+                        onPressed: () {},
+                        child: ImageIcon(
+                          AssetImage(
+                            imagePath('ic_comment'),
+                          ),
+                          size: 24,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    const HorizontalSpacing(),
+                    SizedBox(
+                      width: 28,
+                      height: 28,
+                      child: MaterialButton(
+                        padding: const EdgeInsets.all(2),
+                        onPressed: () {},
+                        child: ImageIcon(
+                          AssetImage(
+                            imagePath('ic_share'),
+                          ),
+                          size: 24,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 28,
+                  height: 28,
+                  child: MaterialButton(
+                    padding: const EdgeInsets.all(2),
+                    onPressed: () {},
+                    child: ImageIcon(
+                      AssetImage(
+                        imagePath('ic_bookmark'),
+                      ),
+                      size: 24,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            child: Text(
+              '${post.likes} Likes',
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+            ),
+          ),
+          const VerticalSpacing(
+            height: 8,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            child: Text(
+              post.caption,
+              style:
+                  const TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          // ignore: prefer_const_constructors
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.zero,
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage(
+                      imagePathJpeg('ic_my_profile'),
+                    ),
+                  ),
+                ),
+                const HorizontalSpacing(
+                  width: 8,
+                ),
+                const Expanded(
+                  child: Text(
+                    'Add comment...',
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
