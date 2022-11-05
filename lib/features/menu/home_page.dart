@@ -19,7 +19,6 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         elevation: 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
-          // Status bar color
           statusBarColor: Colors.white,
 
           statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
