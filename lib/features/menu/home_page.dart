@@ -104,23 +104,44 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(left: 16),
-                        padding: const EdgeInsets.all(4),
-                        width: 64,
-                        height: 64,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: Colors.grey),
-                        ),
-                        child: CircleAvatar(
-                          backgroundImage: AssetImage(
-                            imagePathJpeg('ic_my_profile'),
-                          ),
+                        margin: const EdgeInsets.only(left: 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(4),
+                              width: 64,
+                              height: 64,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(100),
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              child: CircleAvatar(
+                                backgroundImage: AssetImage(
+                                  imagePathJpeg('ic_my_profile'),
+                                ),
+                              ),
+                            ),
+                            const VerticalSpacing(
+                              height: 4,
+                            ),
+                            Container(
+                                padding:
+                                    const EdgeInsets.only(left: 4, right: 4),
+                                width: 72,
+                                child: const Text(
+                                  'Your Texat',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 12),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ))
+                          ],
                         ),
                       ),
                       SizedBox(
-                        height: 64,
+                        height: 84,
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
@@ -143,20 +164,50 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildListStories() {
-    return Container(
-      padding: const EdgeInsets.all(4),
-      margin: const EdgeInsets.only(left: 4),
-      width: 64,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(100),
-        border: Border.all(color: Colors.grey),
-      ),
-      child: CircleAvatar(
-        backgroundImage: AssetImage(
-          imagePathJpeg('ic_my_profile'),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(2),
+          margin: const EdgeInsets.only(left: 4),
+          height: 64,
+          width: 64,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.red.shade800,
+                Colors.yellow.shade600,
+              ],
+            ),
+          ),
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            width: 64,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: CircleAvatar(
+              backgroundImage: AssetImage(
+                imagePathJpeg('ic_my_profile'),
+              ),
+            ),
+          ),
         ),
-      ),
+        Container(
+            padding: const EdgeInsets.only(left: 4),
+            width: 72,
+            child: const Text(
+              'Your Textaa',
+              style: TextStyle(fontSize: 12),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ))
+      ],
     );
   }
 }
