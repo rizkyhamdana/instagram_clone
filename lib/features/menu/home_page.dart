@@ -86,7 +86,77 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: Container(),
+      body: Container(
+        margin: EdgeInsets.zero,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(left: 16),
+                        padding: const EdgeInsets.all(4),
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(color: Colors.grey),
+                        ),
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage(
+                            imagePathJpeg('ic_my_profile'),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 64,
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.only(left: 0, right: 16),
+                          itemCount: 10,
+                          itemBuilder: (context, index) {
+                            return _buildListStories();
+                          },
+                        ),
+                      )
+                    ]),
+              ),
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: Colors.white,
+    );
+  }
+
+  Widget _buildListStories() {
+    return Container(
+      padding: const EdgeInsets.all(4),
+      margin: const EdgeInsets.only(left: 4),
+      width: 64,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(color: Colors.grey),
+      ),
+      child: CircleAvatar(
+        backgroundImage: AssetImage(
+          imagePathJpeg('ic_my_profile'),
+        ),
+      ),
     );
   }
 }
