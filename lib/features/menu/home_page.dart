@@ -20,9 +20,8 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.white,
-
-          statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
-          statusBarBrightness: Brightness.light, // For iOS (dark icons)
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.dark,
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
