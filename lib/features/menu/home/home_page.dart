@@ -49,12 +49,14 @@ class _HomePageState extends State<HomePage> {
                       AssetImage(
                         imagePath('ic_post'),
                       ),
-                      size: 24,
+                      size: 20,
                       color: Colors.black,
                     ),
                   ),
                 ),
-                const HorizontalSpacing(),
+                const HorizontalSpacing(
+                  width: 8,
+                ),
                 SizedBox(
                   width: 28,
                   height: 28,
@@ -65,12 +67,14 @@ class _HomePageState extends State<HomePage> {
                       AssetImage(
                         imagePath('ic_like'),
                       ),
-                      size: 24,
+                      size: 20,
                       color: Colors.black,
                     ),
                   ),
                 ),
-                const HorizontalSpacing(),
+                const HorizontalSpacing(
+                  width: 8,
+                ),
                 SizedBox(
                   width: 28,
                   height: 28,
@@ -81,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                       AssetImage(
                         imagePath('ic_messenger'),
                       ),
-                      size: 24,
+                      size: 20,
                       color: Colors.black,
                     ),
                   ),
@@ -138,17 +142,17 @@ class _HomePageState extends State<HomePage> {
                               height: 4,
                             ),
                             Container(
-                                padding:
-                                    const EdgeInsets.only(left: 4, right: 4),
-                                width: 80,
-                                child: const Text(
-                                  'Your story',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.grey),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ))
+                              padding: const EdgeInsets.only(left: 4, right: 4),
+                              width: 80,
+                              child: const Text(
+                                'Your story',
+                                textAlign: TextAlign.center,
+                                style:
+                                    TextStyle(fontSize: 12, color: Colors.grey),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )
                           ],
                         ),
                       ),

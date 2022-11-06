@@ -34,6 +34,7 @@ class _BaseMenuPageState extends State<BaseMenuPage> {
       body: SizedBox.expand(
         child: PageView(
           controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (index) {
             setState(() => _currentIndex = index);
           },
